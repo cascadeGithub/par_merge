@@ -1,4 +1,5 @@
-English
+***English***
+
 A program to transfer UANI and UISO parameters from one file to another.
 
 How to work with par_merge:
@@ -11,7 +12,8 @@ There should be three files in the folder:
 After running the par_merge program, the final file will appear: output.par
 
 
-Russian
+***Russian***
+
 Программа для переноса UANI и UISO параметров из одного файла в другой.
 
 Как работать с par_merge:
