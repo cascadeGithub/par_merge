@@ -19,20 +19,20 @@ fn create_output_file (base_string: &str, insert_string: &str) -> String {
     let mut uiso = collect_uiso(insert_string);
 
     let mut output_string = String::new();
-    let lines: Vec<&str> = base_string.split("\r\n").collect();
+    let lines: Vec<&str> = base_string.split("\n").collect();
     for line in lines {
         match line {
             line if line.starts_with("UANI") => {
                 output_string.push_str(&uani.pop().expect("UANI line not found"));
-                output_string.push_str("\n");
+                output_string.push('\n');
             },
             line if line.starts_with("UISO") => {
                 output_string.push_str(&uiso.pop().expect("UISO line not found"));
-                output_string.push_str("\n");
+                output_string.push('\n');
             },
             _ => {
                 output_string.push_str(line);
-                output_string.push_str("\r\n");
+                output_string.push('\n');
             }
         }
     }
