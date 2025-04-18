@@ -3,18 +3,13 @@ use std::io::Read;
 use std::path::PathBuf;
 
 fn main() {
-
-    let base_string = read_base_file();
-    let insert_string = read_insert_file();
+    let base_string = read_base_file("base.par");
+    let insert_string = read_insert_file("insert.par");
 
     let output_string = create_output_file(&base_string, &insert_string);
-    fs::write("output.par", output_string)
-    .expect("failed to write the output");
-
-
-
+    fs::write("output.par", output_string).expect("failed to write the output");
 }
-fn create_output_file (base_string: &str, insert_string: &str) -> String {
+fn create_output_file(base_string: &str, insert_string: &str) -> String {
     let mut uani = collect_uani(insert_string);
     let mut uiso = collect_uiso(insert_string);
 
@@ -25,11 +20,11 @@ fn create_output_file (base_string: &str, insert_string: &str) -> String {
             line if line.starts_with("UANI") => {
                 output_string.push_str(&uani.pop().expect("UANI line not found"));
                 output_string.push('\n');
-            },
+            }
             line if line.starts_with("UISO") => {
                 output_string.push_str(&uiso.pop().expect("UISO line not found"));
                 output_string.push('\n');
-            },
+            }
             _ => {
                 output_string.push_str(line);
                 output_string.push('\n');
@@ -39,10 +34,9 @@ fn create_output_file (base_string: &str, insert_string: &str) -> String {
     output_string
 }
 
-
 fn collect_uani(input: &str) -> Vec<String> {
-
-    let mut lines: Vec<String> = input.split('\n')
+    let mut lines: Vec<String> = input
+        .split('\n')
         .filter(|line| line.starts_with("UANI"))
         .map(|line| line.to_owned())
         .collect();
@@ -52,8 +46,8 @@ fn collect_uani(input: &str) -> Vec<String> {
 }
 
 fn collect_uiso(input: &str) -> Vec<String> {
-
-    let mut lines: Vec<String> = input.split('\n')
+    let mut lines: Vec<String> = input
+        .split('\n')
         .filter(|line| line.starts_with("UISO"))
         .map(|line| line.to_owned())
         .collect();
@@ -62,16 +56,16 @@ fn collect_uiso(input: &str) -> Vec<String> {
     lines
 }
 
-fn read_base_file() -> String {
-    let input_path = PathBuf::from("base.par");
+fn read_base_file(path: &str) -> String {
+    let input_path = PathBuf::from(path);
     let mut file = File::open(input_path).expect("file not found");
     let mut output = String::new();
     file.read_to_string(&mut output).expect("invalid contents");
     output
 }
 
-fn read_insert_file() -> String {
-    let input_path = PathBuf::from("insert.par");
+fn read_insert_file(path: &str) -> String {
+    let input_path = PathBuf::from(path);
     let mut file = File::open(input_path).expect("file not found");
     let mut output = String::new();
     file.read_to_string(&mut output).expect("invalid contents");
