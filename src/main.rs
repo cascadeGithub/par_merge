@@ -3,8 +3,8 @@ use std::io::Read;
 use std::path::PathBuf;
 
 fn main() {
-    let base_string = read_base_file("base.par");
-    let insert_string = read_insert_file("insert.par");
+    let base_string = read_file("base.par");
+    let insert_string = read_file("insert.par");
 
     let output_string = create_output_file(&base_string, &insert_string);
     fs::write("output.par", output_string).expect("failed to write the output");
@@ -56,15 +56,7 @@ fn collect_uiso(input: &str) -> Vec<String> {
     lines
 }
 
-fn read_base_file(path: &str) -> String {
-    let input_path = PathBuf::from(path);
-    let mut file = File::open(input_path).expect("file not found");
-    let mut output = String::new();
-    file.read_to_string(&mut output).expect("invalid contents");
-    output
-}
-
-fn read_insert_file(path: &str) -> String {
+fn read_file(path: &str) -> String {
     let input_path = PathBuf::from(path);
     let mut file = File::open(input_path).expect("file not found");
     let mut output = String::new();
